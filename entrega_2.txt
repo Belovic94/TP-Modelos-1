@@ -1,0 +1,4 @@
+Para este ejercicio cree conjuntos los cuales están compuestos de la siguente forma: (tiempo de lavado del conjunto, prendas a lavar, incompatibilidades con otras prendas)
+
+01/11 - Separo los conjuntos segun el tiempo de lavado, como maximo un minuto más y armo los conjuntos más grandes posibles.  Esto me dio un resultado de 914
+

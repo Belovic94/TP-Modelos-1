@@ -1,74 +1,88 @@
-def intersection(lst1, lst2):
-    return list(set(lst1) & set(lst2))
+class LaundrySet:
+    def __init__(self, time, clothes, incompatibilities):
+        self.time = time
+        self.clothes = clothes
+        self.incompatibilities = incompatibilities
+    
+    def __repr__(self):
+        return "(time: {}, clothes: {}, incompatibilities: {})".format(self.time, self.clothes, self.incompatibilities)
 
+    def __str__(self):
+        return "(time: {}, clothes: {}, incompatibilities: {})".format(self.time, self.clothes, self.incompatibilities)   
+    
+    def combine(self, other):
+        if (self.time < other.time):
+            self.time = other.time
+        self.clothes = self.clothes + other.clothes
+        self.incompatibilities = self.incompatibilities | other.incompatibilities
+
+    def isCompatible(self, other):
+        return list(self.incompatibilities & set(other.clothes)) + list(set(self.clothes) & other.incompatibilities) == []
+
+def write_results(laundry_sets):
+    total_time = 0
+    resultFile = open("result.txt", "w")
+    laundry_counter = 1
+    for x in laundry_sets:
+        for j in laundry_sets[x]:
+            total_time += j.time
+            for k in j.clothes:
+                resultFile.write("{} {}\n".format(k, laundry_counter))
+            laundry_counter += 1
+    print("total time: {}".format(total_time))
+    resultFile.close()
 
 def main():
     combinations = []
     compatibilities = {}
     times = {}
-    incompabilities = {}
+    incompatibilities = {}
     clothes = 0
-    file = open('enunciado.txt', 'r')
+    
+    max_time = 0
+    file = open('enunciado2.txt', 'r')
     for line in file:
         row = line.split()
         if row[0] == 'p':
             clothes = int(row[2])
         elif row[0] == 'e':
-            if (row[1] in incompabilities):
-                incompabilities[row[1]].append(row[2])
+            if (row[1] in incompatibilities):
+                incompatibilities[row[1]].add(row[2])
             else:
-                incompabilities[row[1]] = [row[2]]
+                incompatibilities[row[1]] = set((row[2]))
         elif row[0] == 'n':
-            times[row[1]] = int(row[2])
+            time = int(row[2])
+            if (max_time == 0 or time > max_time):
+                max_time = time
+            times[row[1]] = time
     
-    for i in range(1, clothes + 1):
-        firstIndex = str(i)
-        compatibilities[firstIndex] = []
-        for j in range(1, clothes + 1):
-            secondIndex = str(j)
-            if ( firstIndex != secondIndex and secondIndex not in incompabilities[firstIndex]):
-                compatibilities[firstIndex].append(secondIndex)
-                time = times[firstIndex] if times[firstIndex] > times[secondIndex] else times[secondIndex]
-                if (([secondIndex, firstIndex], time) not in combinations):
-                    combinations.append(([firstIndex, secondIndex], time))
-    
-    triCombinations = []
+    laundry_sets = []
+    #Genero los conjuntos
     for i in range(1, clothes + 1):
         index = str(i)
-        for combination in combinations:
-            combinationList = combination[0]
-            intersections = intersection(compatibilities[combinationList[0]], compatibilities[combinationList[1]])
-            if (index not in combination[0] and index in intersections):
-                time = times[index] if times[index] > combination[1] else combination[1]
-                if (([secondIndex, firstIndex, index], time) not in combinations):
-                    triCombinations.append((combinationList + [index] , time))
+        laundry_sets.append(LaundrySet(times[index], [index], incompatibilities.get(index, set())))
+
+    print("{}\n".format(laundry_sets))
+    dicc_laundry_set = {}
+    for i in range(1, max_time + 1, 2):
+        time_laundry_set = [x for x in laundry_sets if x.time in [i, i + 1]]
+        bucket = []
+        for laundry_set in time_laundry_set:
+            if (bucket == []):
+                bucket.append(laundry_set)
+            else:
+                added = False
+                for laundry_set_for in bucket:
+                    if (laundry_set_for.isCompatible(laundry_set)):
+                        laundry_set_for.combine(laundry_set)
+                        added = True
+                        break
+                if (not added):
+                    bucket.append(laundry_set)
+        dicc_laundry_set[(i, i +1)] = bucket
     
-    newCombinations = triCombinations + combinations
-    newCombinations = list(map(lambda x: (x[0], x[1], x[1]/len(x[0])), newCombinations))
-
-    orderedCombinations = sorted(newCombinations, key=lambda x: x[-1])
-    result = []
-    usedClothes = {}
-    totalTime = 0
-    counter = 0
-    for laundry in orderedCombinations:
-        check = any(item in laundry[0] for item in usedClothes)
-        if (check is False):
-            counter += 1
-            for cloth in laundry[0]:
-                usedClothes[cloth] = counter
-            result.append(laundry[0])
-            totalTime += laundry[1]
-    for x in times:
-        if x not in usedClothes:
-            counter += 1
-            usedClothes[x] = counter
-            totalTime += times[x]
-    print("total time: {}".format(totalTime))
+    print(dicc_laundry_set)
+    write_results(dicc_laundry_set)
     file.close()
-    resultFile = open("result.txt", "w")
-    for lavado in usedClothes:
-        resultFile.write("{} {}\n".format(lavado, usedClothes[lavado]))
-    resultFile.close()
-
+   
 main()
