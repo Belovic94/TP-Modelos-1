@@ -61,7 +61,7 @@ def main():
 
     print("{}\n".format(laundry_sets))
     dicc_laundry_set = {}
-    step = 2
+    step = 10
     visits_sets = 0
     for i in range(1, max_time + 1, step):
         first_index = i
