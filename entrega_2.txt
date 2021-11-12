@@ -1,4 +1,6 @@
 Para este ejercicio cree conjuntos los cuales están compuestos de la siguente forma: (tiempo de lavado del conjunto, prendas a lavar, incompatibilidades con otras prendas)
 
-01/11 - Separo los conjuntos segun el tiempo de lavado, como maximo un minuto más y armo los conjuntos más grandes posibles.  Esto me dio un resultado de 914
+01/11 - Separo los conjuntos segun el tiempo de lavado, como maximo un minuto más y armo los conjuntos más grandes posibles.  Esto me dio un resultado de 941
+
+11/11 - Usando la logica de separar en conjuntos según el tiempo, varie los conjuntos desde 1 a 20, obtieniendo el mejor resultado al hacer 2 grupos de 10 (1, 10) y (11, 20). El resultado es 720
 

@@ -14,10 +14,10 @@ class LaundrySet:
         if (self.time < other.time):
             self.time = other.time
         self.clothes = self.clothes + other.clothes
-        self.incompatibilities = self.incompatibilities | other.incompatibilities
+        self.incompatibilities = list(set(self.incompatibilities) | set(other.incompatibilities))
 
     def isCompatible(self, other):
-        return list(self.incompatibilities & set(other.clothes)) + list(set(self.clothes) & other.incompatibilities) == []
+        return list(set(self.incompatibilities) & set(other.clothes)) + list(set(self.clothes) & set(other.incompatibilities)) == []
 
 def write_results(laundry_sets):
     total_time = 0
@@ -33,12 +33,9 @@ def write_results(laundry_sets):
     resultFile.close()
 
 def main():
-    combinations = []
-    compatibilities = {}
     times = {}
     incompatibilities = {}
     clothes = 0
-    
     max_time = 0
     file = open('enunciado2.txt', 'r')
     for line in file:
@@ -47,9 +44,9 @@ def main():
             clothes = int(row[2])
         elif row[0] == 'e':
             if (row[1] in incompatibilities):
-                incompatibilities[row[1]].add(row[2])
+                incompatibilities[row[1]].append(row[2])
             else:
-                incompatibilities[row[1]] = set((row[2]))
+                incompatibilities[row[1]] = [row[2]]
         elif row[0] == 'n':
             time = int(row[2])
             if (max_time == 0 or time > max_time):
@@ -60,14 +57,20 @@ def main():
     #Genero los conjuntos
     for i in range(1, clothes + 1):
         index = str(i)
-        laundry_sets.append(LaundrySet(times[index], [index], incompatibilities.get(index, set())))
+        laundry_sets.append(LaundrySet(times[index], [index], incompatibilities.get(index, [])))
 
     print("{}\n".format(laundry_sets))
     dicc_laundry_set = {}
-    for i in range(1, max_time + 1, 2):
-        time_laundry_set = [x for x in laundry_sets if x.time in [i, i + 1]]
+    step = 2
+    visits_sets = 0
+    for i in range(1, max_time + 1, step):
+        first_index = i
+        last_index = i + step - 1 if (i + step - 1) <= max_time else max_time
+        time_laundry_set = [x for x in laundry_sets if x.time in range(first_index, last_index + 1)]
         bucket = []
+        print("Bucket: {}\n".format((first_index, last_index)))
         for laundry_set in time_laundry_set:
+            visits_sets += 1
             if (bucket == []):
                 bucket.append(laundry_set)
             else:
@@ -79,9 +82,9 @@ def main():
                         break
                 if (not added):
                     bucket.append(laundry_set)
-        dicc_laundry_set[(i, i +1)] = bucket
+        dicc_laundry_set[(first_index, last_index)] = bucket
     
-    print(dicc_laundry_set)
+    print(visits_sets)
     write_results(dicc_laundry_set)
     file.close()
    
