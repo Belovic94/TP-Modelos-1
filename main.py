@@ -8,7 +8,10 @@ class LaundrySet:
         return "(time: {}, clothes: {}, incompatibilities: {})".format(self.time, self.clothes, self.incompatibilities)
 
     def __str__(self):
-        return "(time: {}, clothes: {}, incompatibilities: {})".format(self.time, self.clothes, self.incompatibilities)   
+        return "(time: {}, clothes: {}, incompatibilities: {})".format(self.time, self.clothes, self.incompatibilities)
+
+    def getIncompatibles(self):
+        return self.incompatibilities
     
     def combine(self, other):
         if (self.time < other.time):
@@ -59,6 +62,8 @@ def main():
         index = str(i)
         laundry_sets.append(LaundrySet(times[index], [index], incompatibilities.get(index, [])))
 
+    print("{}\n".format(laundry_sets))
+    laundry_sets.sort(key = lambda x: len(x.getIncompatibles()), reverse = True)
     print("{}\n".format(laundry_sets))
     dicc_laundry_set = {}
     step = 10

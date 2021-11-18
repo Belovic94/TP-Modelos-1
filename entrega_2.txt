@@ -2,5 +2,8 @@ Para este ejercicio cree conjuntos los cuales están compuestos de la siguente f
 
 01/11 - Separo los conjuntos segun el tiempo de lavado, como maximo un minuto más y armo los conjuntos más grandes posibles.  Esto me dio un resultado de 941
 
-11/11 - Usando la logica de separar en conjuntos según el tiempo, varie los conjuntos desde 1 a 20, obtieniendo el mejor resultado al hacer 2 grupos de 10 (1, 10) y (11, 20). El resultado es 720
+11/11 - Usando la logica de separar en conjuntos según el tiempo, varie los conjuntos desde 1 a 20, obtieniendo el mejor resultado 
+al hacer 2 grupos de 10 (1, 10) y (11, 20). El resultado es 720
 
+17/11 - Usando la logica anterior intente ordenar los conjuntos de diferentes manera, teniendo en cuenta la cantidad de incompatibilidades y probando 
+las distintas formas de hacer conjuntos del punto anterior. Llegue a un resultado de 685 ordenando segun cantidad de incompatibilidades en descendente.
