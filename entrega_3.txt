@@ -20,13 +20,13 @@ Tiempo: 1800.266000
 
 Paso 3:
     En este paso, ademas de alterar la solucion inicial, se limito la cantidad de maximo color a 10, que es la cantidad de lavados utilizados por la solucion aproximada.
-    De igual manera no se llega al optimo.
+    Se puede ver que informa de manera correcta el optimo pero de igual manera no se llega al mismo.
 
-Parece que no se llego al optimo, status: 107
-Optimo: 93.000000
-Cota: 67.000000
-Nodos: 14165
-Tiempo: 3829.219000
+Parece que no se llego al optimo, status: 107 
+Optimo: 91.000000 
+Cota: 69.321983 
+Nodos: 487745 
+Tiempo: 1800.766000
 
 
 Paso 4:
