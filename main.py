@@ -40,7 +40,7 @@ def main():
     incompatibilities = {}
     clothes = 0
     max_time = 0
-    file = open('enunciado2.txt', 'r')
+    file = open('enunciado3.txt', 'r')
     for line in file:
         row = line.split()
         if row[0] == 'p':
@@ -66,7 +66,7 @@ def main():
     laundry_sets.sort(key = lambda x: len(x.getIncompatibles()), reverse = True)
     print("{}\n".format(laundry_sets))
     dicc_laundry_set = {}
-    step = 10
+    step = 11
     visits_sets = 0
     for i in range(1, max_time + 1, step):
         first_index = i
@@ -92,5 +92,14 @@ def main():
     print(visits_sets)
     write_results(dicc_laundry_set)
     file.close()
+
+    
+    heuristic_clothes = []
+    file = open('result.txt', 'r')
+    for line in file:
+        row = line.split()
+        heuristic_clothes.append((int(row[0]), int(row[1])))
+    heuristic_clothes = list(map(lambda x: x[1], sorted(heuristic_clothes, key=lambda x: x[0])))
+    print(heuristic_clothes)
    
 main()
