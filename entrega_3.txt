@@ -1,0 +1,39 @@
+Paso 1: 
+    Se corrio el programa sin ninguna modificacion, sin llegar al optimo y teniendo un tiempo de finalizacion de 30 minutos.
+
+Parece que no se llego al optimo, status: 107
+Optimo: 94.000000
+Cota: 69.351113
+Nodos: 9001
+Tiempo: 1800.266000
+
+Paso 2:
+    En este paso, se cambio la solucion inicial por una aproximada que se consiguio corriendo el script que se encuentra en main.py.
+    Los valores de la solucion varian entre 1 y 10, siendo 10 el ultimo lavado.
+    De esta forma igual no se consiguio el optimo.
+
+Parece que no se llego al optimo, status: 107
+Optimo: 94.000000
+Cota: 69.351113
+Nodos: 8937
+Tiempo: 1800.266000
+
+Paso 3:
+    En este paso, ademas de alterar la solucion inicial, se limito la cantidad de maximo color a 10, que es la cantidad de lavados utilizados por la solucion aproximada.
+    De igual manera no se llega al optimo.
+
+Parece que no se llego al optimo, status: 107
+Optimo: 93.000000
+Cota: 67.000000
+Nodos: 14165
+Tiempo: 3829.219000
+
+
+Paso 4:
+    En este ultimo paso, ademas de las modificaciones previamente explicadas, se eliminaron las simetrias reduciendo la cantidad de iteraciones y pudiendo llegar al optimo, 
+    en un tiempo considerablemente menor.
+
+Optimo: 91.000000
+Cota: 91.000000
+Nodos: 23676
+Tiempo: 45.250000
